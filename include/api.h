@@ -10,12 +10,12 @@
 #ifndef INCLUDED_PMT_API_H
 #define INCLUDED_PMT_API_H
 
-#include <gnuradio/attributes.h>
+#include <attributes.h>
 
-#ifdef gnuradio_pmt_EXPORTS
-#define PMT_API __GR_ATTR_EXPORT
+#ifdef lib_pmt_EXPORTS
+#define PMT_API __PMT_ATTR_EXPORT
 #else
-#define PMT_API __GR_ATTR_IMPORT
+#define PMT_API __PMT_ATTR_IMPORT
 #endif
 
 #endif /* INCLUDED_PMT_API_H */

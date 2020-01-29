@@ -14,5 +14,5 @@ install(FILES
   pmt_pool.h
   pmt_sugar.h
   pmt_serial_tags.h
-  DESTINATION ${PMT_INCLUDE_DIR}/pmt
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/include/pmt
 )

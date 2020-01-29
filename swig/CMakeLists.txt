@@ -22,11 +22,11 @@ GR_SWIG_MAKE(pmt_swig pmt_swig.i)
 
 GR_SWIG_INSTALL(
     TARGETS pmt_swig
-    DESTINATION ${GR_PYTHON_DIR}/pmt
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages/pmt
 )
 
 install(
     FILES
     pmt_swig.i
-    DESTINATION ${GR_INCLUDE_DIR}/gnuradio/swig
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/pmt/swig
 )

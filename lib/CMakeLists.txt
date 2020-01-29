@@ -55,8 +55,7 @@ if(BUILD_SHARED_LIBS)
     #install the exported target files
     install(EXPORT pmt-export
       FILE pmtTargets.cmake
-      NAMESPACE gnuradio::
-      DESTINATION ${CMAKE_MODULES_DIR}/gnuradio
+      DESTINATION ${CMAKE_MODULES_DIR}/pmt
       )
 
     include(CMakePackageConfigHelpers)

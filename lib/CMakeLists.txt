@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 
-add_library(gnuradio-pmt
+add_library(pmt
   ${CMAKE_CURRENT_SOURCE_DIR}/pmt_unv.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/pmt.cc
   ${CMAKE_CURRENT_SOURCE_DIR}/pmt_io.cc
@@ -13,16 +13,15 @@ add_library(gnuradio-pmt
   ${CMAKE_CURRENT_SOURCE_DIR}/pmt_serialize.cc
 )
 
-target_link_libraries(gnuradio-pmt
+target_link_libraries(pmt
   Boost::boost
   Boost::thread
   Log4Cpp::log4cpp
 )
 
-target_include_directories(gnuradio-pmt
+target_include_directories(pmt
   PUBLIC
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/
   )
 
@@ -32,45 +31,45 @@ if(MSVC)
     include(${CMAKE_SOURCE_DIR}/cmake/Modules/GrVersion.cmake)
 
     configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/gnuradio-pmt.rc.in
-        ${CMAKE_CURRENT_BINARY_DIR}/gnuradio-pmt.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/pmt.rc.in
+        ${CMAKE_CURRENT_BINARY_DIR}/pmt.rc
     @ONLY)
 
-    target_sources(gnuradio-pmt PRIVATE
-        ${CMAKE_CURRENT_BINARY_DIR}/gnuradio-pmt.rc
+    target_sources(pmt PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}/pmt.rc
     )
 endif(MSVC)
 
 if(BUILD_SHARED_LIBS)
-    set_target_properties(gnuradio-pmt PROPERTIES SOVERSION "1.0")
-    set_target_properties(gnuradio-pmt PROPERTIES VERSION "1.0")
+    set_target_properties(pmt PROPERTIES SOVERSION "1.0")
+    set_target_properties(pmt PROPERTIES VERSION "1.0")
 
     #install the generated files like so...
-    install(TARGETS gnuradio-pmt
-        EXPORT gnuradio-pmt-export
+    install(TARGETS pmt
+        EXPORT pmt-export
         LIBRARY DESTINATION lib # .so/.dylib file
         ARCHIVE DESTINATION lib # .lib file
-        RUNTIME DESTINATION lib/gnuradio # .dll file
+        RUNTIME DESTINATION lib# .dll file
         )
 
     #install the exported target files
-    install(EXPORT gnuradio-pmt-export
-      FILE gnuradio-pmtTargets.cmake
+    install(EXPORT pmt-export
+      FILE pmtTargets.cmake
       NAMESPACE gnuradio::
       DESTINATION ${CMAKE_MODULES_DIR}/gnuradio
       )
 
     include(CMakePackageConfigHelpers)
-    set(TARGET gnuradio-pmt)
+    set(TARGET pmt)
     set(TARGET_DEPENDENCIES ${ARGN})
 
     configure_package_config_file(
       ${PROJECT_SOURCE_DIR}/cmake/Modules/targetConfig.cmake.in
-      ${CMAKE_CURRENT_BINARY_DIR}/cmake/Modules/gnuradio-pmtConfig.cmake
+      ${CMAKE_CURRENT_BINARY_DIR}/cmake/Modules/pmtConfig.cmake
       INSTALL_DESTINATION ${CMAKE_MODULES_DIR}/gnuradio
       )
     install(
-      FILES ${CMAKE_CURRENT_BINARY_DIR}/cmake/Modules/gnuradio-pmtConfig.cmake
+      FILES ${CMAKE_CURRENT_BINARY_DIR}/cmake/Modules/pmtConfig.cmake
       DESTINATION ${CMAKE_MODULES_DIR}/gnuradio
       )
 endif()

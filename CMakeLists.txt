@@ -16,13 +16,15 @@ endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 # Make sure this version matches ${GR_CMAKE_MIN_VERSION} (a variable can't be
 # used here).
 cmake_minimum_required(VERSION 3.8)
-project(gr-pmt)
+project(libpmt)
 
 # Make sure our local CMake Modules path comes first
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
 
 find_package(LOG4CPP REQUIRED)
-find_package(Boost "1.35.0" COMPONENTS boost thread)
+find_package(Boost COMPONENTS boost thread)
+find_package(SWIG REQUIRED)
 add_subdirectory(lib)
 add_subdirectory(python)
+add_subdirectory(swig)

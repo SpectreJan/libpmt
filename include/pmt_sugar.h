@@ -16,8 +16,6 @@
  * shorthand for making pmt objects
  */
 
-#include <gnuradio/messages/msg_accepter.h>
-
 namespace pmt {
 
 //! Make pmt symbol
@@ -51,12 +49,6 @@ static inline pmt_t mp(std::complex<double> z)
 static inline pmt_t mp(std::complex<float> z)
 {
     return make_rectangular(z.real(), z.imag());
-}
-
-//! Make pmt msg_accepter
-static inline pmt_t mp(boost::shared_ptr<gr::messages::msg_accepter> ma)
-{
-    return make_msg_accepter(ma);
 }
 
 //! Make pmt Binary Large Object (BLOB)

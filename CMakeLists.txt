@@ -26,10 +26,29 @@ if(NOT CMAKE_MODULES_DIR)
   SET(CMAKE_MODULES_DIR lib${LIB_SUFFIX}/cmake)
 endif(NOT CMAKE_MODULES_DIR)
 
+########################################################################
+# PyBind11 Related
+########################################################################
+find_package(pybind11 REQUIRED)
+# Get include dirs
+#include_directories(${PYTHON_INCLUDE_DIRS})
+#set(PYBIND11_INCLUDE_DIR
+    #"/usr/local/include/pybind11"
+    #CACHE
+    #STRING
+    #"Location of PyBind11 includes"
+#)
+
+execute_process(
+    COMMAND "${PYTHON_EXECUTABLE}" -c
+    "from __future__ import print_function\ntry:\n import numpy\n import os\n inc_path = numpy.get_include()\n if os.path.exists(os.path.join(inc_path, 'numpy', 'arrayobject.h')):\n  print(inc_path, end='')\nexcept:\n pass"
+    OUTPUT_VARIABLE PYTHON_NUMPY_INCLUDE_DIR)
+
+
+
 find_package(LOG4CPP REQUIRED)
 find_package(Boost COMPONENTS thread)
 find_package(SWIG REQUIRED)
 add_subdirectory(lib)
 add_subdirectory(include)
 add_subdirectory(python)
-add_subdirectory(swig)

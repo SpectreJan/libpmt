@@ -13,7 +13,6 @@
 #endif
 
 #include "pmt_int.h"
-#include <gnuradio/messages/msg_accepter.h>
 #include <pmt/pmt.h>
 #include <pmt/pmt_pool.h>
 #include <stdio.h>
@@ -177,8 +176,8 @@ pmt_t string_to_symbol(const std::string& name)
     }
 
     // Lock the table on insert for thread safety:
-    static boost::mutex thread_safety;
-    boost::mutex::scoped_lock lock(thread_safety);
+    static std::mutex thread_safety;
+    std::lock_guard<std::mutex> lock(thread_safety);
     // Re-do the search in case another thread inserted this symbol into the table
     // before we got the lock
     for (pmt_t sym = (*get_symbol_hash_table())[hash]; sym; sym = _symbol(sym)->next()) {
@@ -757,33 +756,6 @@ void any_set(pmt_t obj, const boost::any& any)
         throw wrong_type("pmt_any_set", obj);
     _any(obj)->set(any);
 }
-
-////////////////////////////////////////////////////////////////////////////
-//               msg_accepter -- built from "any"
-////////////////////////////////////////////////////////////////////////////
-
-bool is_msg_accepter(const pmt_t& obj)
-{
-    if (!is_any(obj))
-        return false;
-
-    boost::any r = any_ref(obj);
-    return boost::any_cast<gr::messages::msg_accepter_sptr>(&r) != 0;
-}
-
-//! make a msg_accepter
-pmt_t make_msg_accepter(gr::messages::msg_accepter_sptr ma) { return make_any(ma); }
-
-//! Return underlying msg_accepter
-gr::messages::msg_accepter_sptr msg_accepter_ref(const pmt_t& obj)
-{
-    try {
-        return boost::any_cast<gr::messages::msg_accepter_sptr>(any_ref(obj));
-    } catch (boost::bad_any_cast& e) {
-        throw wrong_type("pmt_msg_accepter_ref", obj);
-    }
-}
-
 
 ////////////////////////////////////////////////////////////////////////////
 //             Binary Large Object -- currently a u8vector

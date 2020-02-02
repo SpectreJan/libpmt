@@ -11,7 +11,7 @@
 // #pragma once
 
 #include <pmt/pmt.h>
-#include <gnuradio/gr_complex.h>
+#include <complex>
 
 void bind_pmt(py::module& m)
 {

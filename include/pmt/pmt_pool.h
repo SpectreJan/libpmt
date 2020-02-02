@@ -11,7 +11,9 @@
 #define INCLUDED_PMT_POOL_H
 
 #include <pmt/api.h>
-#include <boost/thread.hpp>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 #include <cstddef>
 #include <vector>
 
@@ -30,9 +32,9 @@ class PMT_API pmt_pool
         struct item* d_next;
     };
 
-    typedef boost::unique_lock<boost::mutex> scoped_lock;
-    mutable boost::mutex d_mutex;
-    boost::condition_variable d_cond;
+    typedef std::unique_lock<std::mutex> scoped_lock;
+    mutable std::mutex d_mutex;
+    std::condition_variable d_cond;
 
     size_t d_itemsize;
     size_t d_alignment;

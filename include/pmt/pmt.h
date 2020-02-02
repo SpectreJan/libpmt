@@ -15,18 +15,12 @@
 #include <stdint.h>
 #include <boost/any.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 #include <complex>
+#include <memory>
 #include <iosfwd>
 #include <stdexcept>
 #include <string>
 #include <vector>
-
-namespace gr {
-namespace messages {
-class msg_accepter;
-}
-} // namespace gr
 
 /*!
  * This file defines a polymorphic type and the operations on it.
@@ -81,7 +75,7 @@ public:
  * \brief typedef for shared pointer (transparent reference counting).
  * See http://www.boost.org/libs/smart_ptr/smart_ptr.htm
  */
-typedef boost::shared_ptr<pmt_base> pmt_t;
+typedef std::shared_ptr<pmt_base> pmt_t;
 
 class PMT_API exception : public std::logic_error
 {
@@ -693,20 +687,6 @@ PMT_API boost::any any_ref(pmt_t obj);
 //! Store \p any in \p obj
 PMT_API void any_set(pmt_t obj, const boost::any& any);
 
-
-/*
- * ------------------------------------------------------------------------
- *    msg_accepter -- pmt representation of pmt::msg_accepter
- * ------------------------------------------------------------------------
- */
-//! Return true if \p obj is a msg_accepter
-PMT_API bool is_msg_accepter(const pmt_t& obj);
-
-//! make a msg_accepter
-PMT_API pmt_t make_msg_accepter(boost::shared_ptr<gr::messages::msg_accepter> ma);
-
-//! Return underlying msg_accepter
-PMT_API boost::shared_ptr<gr::messages::msg_accepter> msg_accepter_ref(const pmt_t& obj);
 
 /*
  * ------------------------------------------------------------------------

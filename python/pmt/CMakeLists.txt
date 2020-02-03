@@ -27,7 +27,6 @@ GR_PYTHON_INSTALL(FILES
     pmt_to_python.py
     DESTINATION ${GR_PYTHON_DIR}/pmt
 )
-message(STATUS "GR_PYTHON_DIR: ${GR_PYTHON_DIR}")
 
 ########################################################################
 # Python Bindings
@@ -41,7 +40,6 @@ target_include_directories(pmt_python PUBLIC
     ${PYBIND11_INCLUDE_DIR} 
 )
 target_link_libraries(pmt_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} pmt)
-message(STATUS "${PYTHON_LIBRARIES} is the bomb")
 
 # if(WIN32)
 #     set(PMT_PYTHON_LIBRARY_NAME libpmt_python.pyd)

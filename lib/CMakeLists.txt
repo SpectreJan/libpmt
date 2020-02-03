@@ -22,3 +22,16 @@ target_include_directories(pmt
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 
+
+set(LIBVER "0.8.0")
+set(VERSION "0.8.0")
+#set additional target properties
+set_target_properties(pmt PROPERTIES SOVERSION ${LIBVER})
+set_target_properties(pmt PROPERTIES VERSION ${VERSION})
+
+
+install(TARGETS pmt
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION static
+)
+

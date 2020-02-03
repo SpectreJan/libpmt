@@ -9,10 +9,10 @@
 # Install the headers
 ########################################################################
 install(FILES
-  api.h
-  pmt.h
-  pmt_pool.h
-  pmt_sugar.h
-  pmt_serial_tags.h
+  pmt/api.h
+  pmt/pmt.h
+  pmt/pmt_pool.h
+  pmt/pmt_sugar.h
+  pmt/pmt_serial_tags.h
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include/pmt
 )

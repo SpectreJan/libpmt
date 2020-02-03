@@ -40,4 +40,5 @@ enable_testing()
 ########################################################################
 find_package(pybind11 REQUIRED)
 add_subdirectory(lib)
+add_subdirectory(include)
 add_subdirectory(python)

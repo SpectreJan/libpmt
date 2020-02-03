@@ -18,6 +18,7 @@
 # Boston, MA 02110-1301, USA.
 
 include(GrPython)
+include(PMTSetupTests)
 
 ########################################################################
 # Install python files
@@ -64,18 +65,31 @@ install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} DESTINATION ${GR_PYTHON_DIR} COMPO
 
 ########################################################################
 # Setup unit tests
-########################################################################
-# if(ENABLE_TESTING)
-# include(GrTest)
-# file(GLOB py_qa_test_files "qa_*.py")
-# foreach(py_qa_test_file ${py_qa_test_files})
-#     get_filename_component(py_qa_test_name ${py_qa_test_file} NAME_WE)
-#     set(GR_TEST_PYTHON_DIRS
-#         ${CMAKE_BINARY_DIR}/gnuradio-runtime/python
-#         ${CMAKE_BINARY_DIR}/gnuradio-runtime/swig
-#         ${CMAKE_BINARY_DIR}/gnuradio-blocks/swig		
-#     )
-#     set(GR_TEST_TARGET_DEPS gnuradio-runtime)
-#     GR_ADD_TEST(${py_qa_test_name} ${QA_PYTHON_EXECUTABLE} -B ${py_qa_test_file})
-# endforeach(py_qa_test_file)
-# endif(ENABLE_TESTING)
+#######################################################################
+if(UNIX)
+
+    file(GLOB py_qa_test_files "qa_*.py")
+
+    foreach(py_qa_test_file ${py_qa_test_files})
+
+        get_filename_component(py_qa_test_name ${py_qa_test_file} NAME_WE)
+        set(LD_PATH_VAR "LD_LIBRARY_PATH")
+        if(APPLE)
+            set(LD_PATH_VAR "DYLD_LIBRARY_PATH")
+        endif(APPLE)
+
+        set(binpath "${CMAKE_CURRENT_BINARY_DIR}:$PATH")
+        list(APPEND pypath "${CMAKE_CURRENT_BINARY_DIR}/../:$PYTHONPATH")
+
+        set(SHELL "/bin/sh")
+        set(sh_file ${CMAKE_CURRENT_BINARY_DIR}/${py_qa_test_name}_test.sh)
+        file(WRITE ${sh_file} "#! ${SHELL}\n")
+        file(APPEND ${sh_file} "export PATH=${binpath}\n")
+        file(APPEND ${sh_file} "export PYTHONPATH=${pypath}\n")
+        file(APPEND ${sh_file} "${PYTHON_EXECUTABLE} -B ${CMAKE_CURRENT_SOURCE_DIR}/${py_qa_test_name}.py")
+        #make the shell file executable
+        execute_process(COMMAND chmod +x ${sh_file})
+
+        add_test(${py_qa_test_name} ${SHELL} ${sh_file})
+    endforeach(py_qa_test_file)
+endif(UNIX)

@@ -33,7 +33,7 @@ execute_process(
     OUTPUT_VARIABLE PYTHON_NUMPY_INCLUDE_DIR
 )
 
-
+enable_testing()
 
 ########################################################################
 # PyBind11 Related

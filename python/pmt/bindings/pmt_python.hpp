@@ -13,6 +13,19 @@
 #include <pmt/pmt.h>
 #include <complex>
 
+/*
+ * This has to be done, because it seems that std::strings char[]
+ * is getting converted into uintxx_t with xx > 8, so we end up
+ * with invalid UTF-8. This should be a pybind11/python bug (maybe, idk)
+ * But this fixes it. Though this destroys the ability to "pretty" print
+ * the serialzed object, but with most objects we dont care anyway
+ */
+py::bytes serialize_str_wrapper(pmt::pmt_t blob)
+{
+    std::string s = pmt::serialize_str(blob);
+    return py::bytes(s);
+}
+
 void bind_pmt(py::module& m)
 {
     using pmt_base      = pmt::pmt_base;
@@ -1007,7 +1020,7 @@ void bind_pmt(py::module& m)
             py::arg("source") 
         );
         m.def("dump_sizeof",&pmt::dump_sizeof);
-        m.def("serialize_str",&pmt::serialize_str,
+        m.def("serialize_str",&serialize_str_wrapper,
             py::arg("obj") 
         );
         m.def("deserialize_str",&pmt::deserialize_str,

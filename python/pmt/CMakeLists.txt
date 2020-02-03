@@ -18,7 +18,6 @@
 # Boston, MA 02110-1301, USA.
 
 include(GrPython)
-include(PMTSetupTests)
 
 ########################################################################
 # Install python files

@@ -20,13 +20,6 @@ project(awesomepmt)
 # Make sure our local CMake Modules path comes first
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake/Modules)
 
-set(PYBIND11_INCLUDE_DIR
-    "/usr/local/include/pybind11"
-    CACHE
-    STRING
-    "Location of PyBind11 includes"
-)
-
 execute_process(
     COMMAND "${PYTHON_EXECUTABLE}" -c
     "from __future__ import print_function\ntry:\n import numpy\n import os\n inc_path = numpy.get_include()\n if os.path.exists(os.path.join(inc_path, 'numpy', 'arrayobject.h')):\n  print(inc_path, end='')\nexcept:\n pass"

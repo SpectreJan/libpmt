@@ -37,7 +37,8 @@ target_include_directories(pmt_python PUBLIC
     ${PYTHON_NUMPY_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/../../lib
     ${CMAKE_CURRENT_SOURCE_DIR}/../../include
-    ${PYBIND11_INCLUDE_DIR} 
+    ${pybind11_INCLUDE_DIRS}
+    ${pybind11_INCLUDE_DIR}
 )
 target_link_libraries(pmt_python PUBLIC ${Boost_LIBRARIES} ${PYTHON_LIBRARIES} pmt)
 

@@ -17,6 +17,24 @@ I also have to give a huge shoutout and thanks to [Josh Morman](https://github.c
 
 # Installation
 
+## Dependencies
+Python3 and Pybind11 are the only dependency of libpmt.
+Get pybind11 from your favorite distro package manager
+```sh
+# Arch Linux
+pacman -S pybind11
+
+# Ubuntu
+sudo apt install pybind11-dev
+
+# Fedora
+sudo dnf install pybind11-develA
+
+# openSUSE Tumbleweed (sorry, no Leap)
+zypper install python3-pybind11
+```
+You can also install pybind11 from source. Instructions are available at https://github.com/pybind/pybind11
+
 ## Get the source
 ```sh
 git clone https://github.com/SpectreJan/libpmt.git

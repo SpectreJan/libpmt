@@ -16,3 +16,8 @@ install(FILES
   pmt/pmt_serial_tags.h
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include/pmt
 )
+
+install(FILES
+    attributes.h
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/
+)
